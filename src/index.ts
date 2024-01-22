@@ -1,4 +1,4 @@
-import { ethers, hashMessage, Transaction } from "ethers";
+import { assert, ethers, hashMessage, Transaction, TypedDataEncoder } from "ethers";
 import {
   getPublicKey,
   getEthereumAddress,
@@ -61,12 +61,30 @@ export class AwsKmsSigner extends ethers.AbstractSigner {
     return new AwsKmsSigner(this.keyId, this.kms, provider);
   }
 
-  signTypedData(
+  async signTypedData(
     _domain: ethers.TypedDataDomain,
     _types: Record<string, ethers.TypedDataField[]>,
     // rome-ignore lint/suspicious/noExplicitAny: <explanation>
     _value: Record<string, any>
   ): Promise<string> {
-    throw new Error("not implemented");
+   // Populate any ENS names
+   const populated = await TypedDataEncoder.resolveNames(_domain, _types, _value, async (name: string) => {
+      // @TODO: this should use resolveName; addresses don't
+      //        need a provider
+
+      assert(this.provider != null, "cannot resolve ENS names without a provider", "UNSUPPORTED_OPERATION", {
+          operation: "resolveName",
+          info: { name }
+      });
+
+      const address = await this.provider.resolveName(name);
+      assert(address != null, "unconfigured ENS name", "UNCONFIGURED_NAME", {
+          value: name
+      });
+
+      return address;
+    });
+
+  return this._signDigest(TypedDataEncoder.hash(populated.domain, _types, populated.value));
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@dennisdang/ethers-aws-kms-signer",
+  "name": "@elranu/ethers-aws-kms-signer",
   "version": "1.0.3",
   "description": "An Ethers.js compatible signer that connects to AWS KMS",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "test": "npx vitest run"
   },
   "dependencies": {
-    "@aws-sdk/client-kms": "^3.378.0",
+    "@aws-sdk/client-kms": "^3.421.0",
     "@types/node": "^20.4.5",
     "asn1.js": "^5.4.1",
     "dotenv": "^16.3.1",
