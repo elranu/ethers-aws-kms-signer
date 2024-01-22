@@ -3,13 +3,13 @@
   "version": "1.0.4",
   "description": "An Ethers.js compatible signer that connects to AWS KMS",
   "license": "MIT",
-  "repository": "https://github.com/dangdennis/ethers-aws-kms-signer",
+  "repository": "https://github.com/elranu/ethers-aws-kms-signer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": {
     "email": "dennis.dang@hey.com",
     "name": "Dennis Dang",
-    "url": "https://github.com/dangdennis"
+    "url": "https://github.com/elranu"
   },
   "files": [
     "dist",
